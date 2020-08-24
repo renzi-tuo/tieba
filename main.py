@@ -172,7 +172,6 @@ def main():
     b = os.environ['BDUSS'].split('#')
     for n, i in enumerate(b):
         logger.info("开始签到第" + str(n) + "个用户")
-        desp.append(logger.info("开始签到第" + str(n) + "个用户"))
         tbs = get_tbs(i)
         favorites = get_favorite(i)
         for j in favorites:
