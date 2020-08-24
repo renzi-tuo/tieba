@@ -22,4 +22,5 @@ jobs:
       - name: 'Start Sign'
         env:
           BDUSS: ${{ secrets.BDUSS }}
+          PUSH_KEY: ${{ secrets.PUSH_KEY }}
         run: python main.py
