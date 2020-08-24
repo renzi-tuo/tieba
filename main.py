@@ -5,6 +5,7 @@ import hashlib
 import time
 import copy
 import logging
+import datetime
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -171,12 +172,21 @@ def main():
     b = os.environ['BDUSS'].split('#')
     for n, i in enumerate(b):
         logger.info("开始签到第" + str(n) + "个用户")
+        desp.append(logger.info("开始签到第" + str(n) + "个用户"))
         tbs = get_tbs(i)
         favorites = get_favorite(i)
         for j in favorites:
             client_sign(i, tbs, j["id"], j["name"])
         logger.info("完成第" + str(n) + "个用户签到")
+        desp.append(logger.info("完成第" + str(n) + "个用户签到"))
     logger.info("所有用户签到结束")
+    socky= os.environ['PUSH_KEY']
+    ISOTIMEFORMAT = '%Y-%m-%d %H:%M'
+    tb = "贴吧签到 "
+    text =tb + datetime.datetime.now().strftime(ISOTIMEFORMAT)
+    url = 'https://sc.ftqq.com/{0}.send?text={1}&desp={2}'.format(socky,text, desp)
+    requests.get(url)
+    
 
 
 if __name__ == '__main__':
